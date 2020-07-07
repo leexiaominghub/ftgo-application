@@ -62,6 +62,7 @@ task lxm {
     println "task lxm"
 }
 
+
 task compileAll(type: GradleBuild) {
   tasks = ["testClasses", "compileIntegrationTestJava", "compileComponentTestJava"]
 }
