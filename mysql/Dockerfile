@@ -8,3 +8,4 @@ COPY template /docker-entrypoint-initdb.d/template
 
 RUN touch /docker-entrypoint-initdb.d/5.schema-per-service.sql
 RUN chown mysql -R /docker-entrypoint-initdb.d
+

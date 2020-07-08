@@ -216,8 +216,8 @@ services:
       JAVA_OPTS: -Xmx128m
 
   dynamodblocal-init:
-    #build: ./dynamodblocal-init
-    image: ftgo-application_dynamodblocal-init
+    build: ./dynamodblocal-init
+    #image: ftgo-application_dynamodblocal-init
     depends_on:
       - dynamodblocal
     restart: on-failure

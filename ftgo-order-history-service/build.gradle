@@ -59,7 +59,7 @@ dependencies {
 
 dockerCompose {
 
-    startedServices = ['not-used']
+    //startedServices = ['not-used']
 
     integrationTests {
         if (System.getenv("FTGO_DOCKER_COMPOSE_FILES") != null)
