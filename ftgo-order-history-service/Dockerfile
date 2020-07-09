@@ -1,4 +1,5 @@
-FROM openjdk:8u171-jre-alpine
+FROM leexiaoming/openjdk-curl:8u171-jre-alpine
+#FROM openjdk:8u171-jre-alpine
 #RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 #RUN apk --no-cache add curl
 CMD java ${JAVA_OPTS} -jar ftgo-order-history-service.jar

@@ -1,4 +1,5 @@
-FROM python:2.7.16-alpine3.9
+FROM leexiaoming/python-curl:2.7.16-alpine3.9
+#FROM python:2.7.16-alpine3.9
 #COPY proxy.sh /etc/profile.d/
 #RUN mkdir .pip
 #COPY pip.conf .pip/
