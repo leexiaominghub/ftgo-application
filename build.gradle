@@ -50,6 +50,10 @@ task buildContracts(type: GradleBuild) {
   tasks = subprojects.collect { it.name }.findAll { it.endsWith("-contracts") }.collect { ":" + it + ":publish"}
 }
 
+task removeContracts(type: GradleBuild) {
+
+}
+
 /*
 afterEvaluate {
     //tasks.collect {println it}

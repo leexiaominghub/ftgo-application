@@ -17,6 +17,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.contract.stubrunner.StubFinder;
 import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -40,6 +41,8 @@ import static org.mockito.Mockito.when;
         )
 @DirtiesContext
 public class OrderHistoryEventHandlersTest {
+  @Autowired
+  ApplicationContext applicationContext;
 
   @Configuration
   @EnableAutoConfiguration
@@ -48,6 +51,8 @@ public class OrderHistoryEventHandlersTest {
           TramInMemoryConfiguration.class,
           EventuateContractVerifierConfiguration.class})
   public static class TestConfiguration {
+    @Autowired
+    ApplicationContext applicationContext;
 
     @Bean
     public ChannelMapping channelMapping() {
