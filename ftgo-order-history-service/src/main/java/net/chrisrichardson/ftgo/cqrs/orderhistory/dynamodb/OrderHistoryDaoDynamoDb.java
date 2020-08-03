@@ -1,36 +1,4 @@
-package
-public static final String FTGO_ORDER_HISTORY_BY_ID = "ftgo-order-history";
-public static final String FTGO_ORDER_HISTORY_BY_CONSUMER_ID_AND_DATE =
-        "ftgo-order-history-by-consumer-id-and-creation-time";
-public static final String ORDER_STATUS_FIELD = "orderStatus";
-private static final String DELIVERY_STATUS_FIELD = "deliveryStatus";
-
-private final DynamoDB dynamoDB;
-
-private Table table;
-private Index index;
-
-public OrderHistoryDaoDynamoDb(DynamoDB dynamoDB) {
-        this.dynamoDB = dynamoDB;
-        table = this.dynamoDB.getTable(FTGO_ORDER_HISTORY_BY_ID);
-        index = table.getIndex(FTGO_ORDER_HISTORY_BY_CONSUMER_ID_AND_DATE);
-        }
-
-@Override
-public boolean addOrder(Order order, Optional<SourceEvent> eventSource) {
-        UpdateItemSpec spec = new UpdateItemSpec()
-        .withPrimaryKey("orderId", order.getOrderId())
-        .withUpdateExpression("SET orderStatus = :orderStatus, " +
-        "creationDate = :creationDate, consumerId = :consumerId, lineItems =" +
-        " :lineItems, keywords = :keywords, restaurantId = :restaurantId, " +
-        " restaurantName = :restaurantName"
-        )
-        .withValueMap(new Maps()
-        .add(":orderStatus", order.getStatus().toString())
-        .add(":consumerId", order.getConsumerId())
-        .add(":creationDate", order.getCreationDate().getMillis())
-        .add(":lineItems", mapLineItems(order.getLineItems()))
-        .add(":keywords", mapKeywords(order)net.chrisrichardson.ftgo.cqrs.orderhistory.dynamodb;
+package net.chrisrichardson.ftgo.cqrs.orderhistory.dynamodb;
 
 
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
@@ -81,7 +49,39 @@ import static java.util.stream.Collectors.toSet;
 public class OrderHistoryDaoDynamoDb implements OrderHistoryDao {
 
   private Logger logger = LoggerFactory.getLogger(getClass());
-)
+
+  public static final String FTGO_ORDER_HISTORY_BY_ID = "ftgo-order-history";
+  public static final String FTGO_ORDER_HISTORY_BY_CONSUMER_ID_AND_DATE =
+          "ftgo-order-history-by-consumer-id-and-creation-time";
+  public static final String ORDER_STATUS_FIELD = "orderStatus";
+  private static final String DELIVERY_STATUS_FIELD = "deliveryStatus";
+
+  private final DynamoDB dynamoDB;
+
+  private Table table;
+  private Index index;
+
+  public OrderHistoryDaoDynamoDb(DynamoDB dynamoDB) {
+    this.dynamoDB = dynamoDB;
+    table = this.dynamoDB.getTable(FTGO_ORDER_HISTORY_BY_ID);
+    index = table.getIndex(FTGO_ORDER_HISTORY_BY_CONSUMER_ID_AND_DATE);
+  }
+
+  @Override
+  public boolean addOrder(Order order, Optional<SourceEvent> eventSource) {
+    UpdateItemSpec spec = new UpdateItemSpec()
+            .withPrimaryKey("orderId", order.getOrderId())
+            .withUpdateExpression("SET orderStatus = :orderStatus, " +
+                    "creationDate = :creationDate, consumerId = :consumerId, lineItems =" +
+                    " :lineItems, keywords = :keywords, restaurantId = :restaurantId, " +
+                    " restaurantName = :restaurantName"
+            )
+            .withValueMap(new Maps()
+                    .add(":orderStatus", order.getStatus().toString())
+                    .add(":consumerId", order.getConsumerId())
+                    .add(":creationDate", order.getCreationDate().getMillis())
+                    .add(":lineItems", mapLineItems(order.getLineItems()))
+                    .add(":keywords", mapKeywords(order))
                     .add(":restaurantId", order.getRestaurantId())
                     .add(":restaurantName", order.getRestaurantName())
                     .map())
