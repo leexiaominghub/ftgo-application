@@ -1,5 +1,12 @@
 buildscript {
     repositories {
+
+        mavenLocal()
+/*
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven{ url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
+*/
+
         mavenCentral()
     }
     dependencies {
@@ -31,6 +38,12 @@ subprojects {
     repositories {
         eventuateMavenRepoUrl.split(',').each { repoUrl -> maven { url repoUrl } }
 
+        mavenLocal()
+/*
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven{ url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
+*/
+
         mavenCentral()
         jcenter()
 
@@ -48,26 +61,12 @@ subprojects {
 
 task buildContracts(type: GradleBuild) {
   tasks = subprojects.collect { it.name }.findAll { it.endsWith("-contracts") }.collect { ":" + it + ":publish"}
+  //println getTasks() // lxm
 }
 
 task removeContracts(type: GradleBuild) {
 
 }
-
-/*
-afterEvaluate {
-    //tasks.collect {println it}
-    println "afterEvaluate"
-}
-beforeEvaluate {
-    println "beforeEvaluate"
-}
-//task lxm(type: GradleBuild) {
-task lxm {
-    println "task lxm"
-}
- */
-
 
 task compileAll(type: GradleBuild) {
   tasks = ["testClasses", "compileIntegrationTestJava", "compileComponentTestJava"]
