@@ -12,10 +12,13 @@ class ComponentTestsPlugin implements Plugin<Project> {
         project.sourceSets {
             componentTest {
                 java {
-                    compileClasspath += main.output + test.output
-                    runtimeClasspath += main.output + test.output
                     srcDir project.file('src/component-test/java')
                 }
+
+                compileClasspath += main.output + test.output
+                runtimeClasspath += main.output + test.output
+                
+
                 resources.srcDir project.file('src/component-test/resources')
             }
         }
@@ -34,8 +37,10 @@ class ComponentTestsPlugin implements Plugin<Project> {
 
         project.tasks.withType(Test) {
             reports.html.destination = project.file("${project.reporting.baseDir}/${name}")
+/*
             println("lxm----------------")
             println("${project.reporting.baseDir}/${name}")
+*/
         }
     }
 }

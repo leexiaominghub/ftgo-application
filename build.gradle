@@ -78,4 +78,6 @@ dockerCompose {
   if (project.hasProperty('startedServices'))
     startedServices= project.ext.startedServices.split(',')
 
+  all {}
+
 }
