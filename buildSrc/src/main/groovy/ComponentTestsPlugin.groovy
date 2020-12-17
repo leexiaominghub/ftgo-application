@@ -37,10 +37,6 @@ class ComponentTestsPlugin implements Plugin<Project> {
 
         project.tasks.withType(Test) {
             reports.html.destination = project.file("${project.reporting.baseDir}/${name}")
-/*
-            println("lxm----------------")
-            println("${project.reporting.baseDir}/${name}")
-*/
         }
     }
 }
